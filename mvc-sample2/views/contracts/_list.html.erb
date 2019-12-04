@@ -1,0 +1,46 @@
+<table class="table table-striped table-bordered table-hover dataTables">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>CreateAt</th>
+      <th>UpdateAt</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @contracts.completed.each do |contract| %>
+      <tr class="gradeX" >
+        <td>
+          <%= link_to contract_path(contract) do %>
+            <%= contract.name&.humanize %>
+          <% end %>
+        </td>
+        <td>
+          <%= date_format(contract.created_at) %>
+        </td>
+        <td>
+          <%= date_format(contract.updated_at) %>
+        </td>
+        <td>
+          <%= link_to contract_clone_path(contract), data: {toggle: :tooltip}, title: :clone do %>
+            <i class="fa fa-clone "></i>
+          <% end %>
+          <%= link_to contract_path(contract),method: :delete, data: {confirm: 'Are you sure?', toggle: :tooltip}, title: :delete do %>
+            <i class="fa fa-trash-o "></i>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% content_for :javascript do %>
+  <script type="text/javascript">
+    $(function() {
+      $('.dataTables').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: 'lTfgitp',
+      });
+    });
+  </script>
+<% end %>

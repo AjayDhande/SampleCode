@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <%= wicked_pdf_stylesheet_link_tag "pdf" %>
+    <%= javascript_include_tag "http://code.jquery.com/jquery-1.10.0.min.js" %>
+    <%= javascript_include_tag "http://code.jquery.com/ui/1.10.3/jquery-ui.min.js" %>
+    <script type="text/javascript">
+		$(document).ready(function(){
+			$(".space-p-bar").hide()
+      $('.new_set').hide()
+		})
+	</script>
+  </head>
+  <body>
+  	<%= @contract.body.gsub('style=\"page-break-after\:always\;clear\:both\;\"',"")&.html_safe%>
+  </body>
+</html>
+
+

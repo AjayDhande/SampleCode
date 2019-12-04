@@ -1,0 +1,67 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>Create Contract</h2>
+  </div>
+</div>
+<div class="row wrapper wrapper-content animated fadeInRight" id="sortable-view">
+  <div class="col-sm-8">
+    <%= render 'layouts/error_massage', errors: @contract.errors %>
+  </div>
+  <div class="col-lg-12">
+    <div class="container-fluid contract no-padding">
+      <%= render 'form' %>
+    </div>
+  </div>
+  <% content_for :contract_right_section do %>
+    <div class="form-group right-section-fix">
+      <div class="col-sm-12 search-form">
+        <span id="break" data-toggle="tooltip" title="Insert page break line" draggable="true" ondragstart="dragStart(event)"></span>
+        <%= form_tag search_repository_contracts_path, remote: true do %>
+          <div class="form-group">
+            <%= select_tag('section_type', options_for_select(section_options, params[:r]), prompt: 'Select...', class:  'form-control')%>
+          </div>
+          <div class="form-group search-div <%= 'hide-field' if params[:r].blank? %>" >
+            <div class="col-sm-10 no-padding">
+              <%= text_field_tag('search', nil, placeholder: 'search text..', class:  'form-control')%>
+            </div>
+            <div class="col-sm-2">
+              <%= button_tag class:  'btn btn-sm btn-success' do %>
+                <i class="fa fa-search" aria-hidden="true"></i>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="cliearfix"></div>
+      <div class ="col-sm-12 sortable1" id="sectionTypeContent">
+        <!-- if clause already selected -->
+        <%= render 'sections/index' if params[:r] == 'clauses' %>
+        <%= render 'definitions/index' if params[:r] == 'definitions' %>
+        <%= render 'parties/index' if params[:r] == 'parties' %>
+        <%= render 'contract_free_texts/index' if params[:r] == 'free_text' %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!--<div id='contract_name_modal' style="display:none;">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content animated bounceInRight">-->
+<!--      <div class="modal-header">-->
+<!--        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
+<!--        <i class="fa fa-laptop modal-icon"></i>-->
+<!--        <h4 class="modal-title">Contract Name</h4>-->
+<!--        <small class="font-bold"></small>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        <p>-->
+<!--          <label>Name:</label>-->
+<!--          <%= text_field_tag :name, nil, class: 'form-control form', id: 'popup_contract_name' %>-->
+<!--        </p>-->
+<!--      </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <%= button_tag 'Continue...', class: 'btn btn-success', id: 'btn_contract_name' %>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

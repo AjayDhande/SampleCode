@@ -1,0 +1,62 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-8">
+    <h2>All Contract</h2>
+    <ol class="breadcrumb">
+      <li>
+        <%= link_to 'Home', root_url %>
+      </li>
+      <li class="active">
+        <strong><%= 'Contracts' %></strong>
+      </li>
+    </ol>
+  </div>
+  <div class="col-lg-4">
+    <div class="text-center  title-action">
+      <%= link_to 'Add Contract', new_contract_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+<div class="wrapper wrapper-content">
+  <div class="row animated fadeInRight">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Completed <small>(Contracts).</small></h5>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <%= render 'list' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper wrapper-content">
+  <div class="row animated fadeInRight">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Incomplete <small>(Contracts).</small></h5>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <%= render 'incomplete' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper wrapper-content">
+  <div class="row animated fadeInRight">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Deleted <small>(Contracts).</small></h5>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <%= render 'deleted' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

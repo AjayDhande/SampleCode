@@ -1,0 +1,68 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-sm-8">
+    <h2>Client - <%= @contract.title&.humanize%></h2>
+    <ol class="breadcrumb">
+      <li>
+        <%= link_to 'Home', root_url %>
+      </li>
+      <li class="active">
+        <strong><%= link_to 'Contracts', contracts_path %></strong>
+      </li>
+    </ol>
+  </div>
+  <div class="col-sm-4">
+    <div class="text-center  title-action">
+      <%= link_to new_contract_path, class: "btn btn-primary btn-md" do %>
+        <i class="fa fa-plus" aria-hidden="true"></i> Contract
+      <% end if @contract.complete %>
+    </div>
+  </div>
+</div>
+<div class="wrapper wrapper-content">
+  <div class="row animated fadeInRight">
+    <div class="ibox float-e-margins">
+      <div class="row">
+        <% unless @contract.complete %>
+          <div class="col-sm-12">
+            <div class="alert alert-success">
+              <h2><i class="fa fa-search" aria-hidden="true"></i> Contract Preview</h2>
+            </div>
+          </div>
+        <% end %>
+        <div class="col-sm-12">
+          <div class="text-center">
+            <%= link_to to_pdf_contract_path(@contract), class: "btn btn-primary btn-md", target: :_blank do %>
+              <i class="fa fa-download" aria-hidden="true"></i> Download
+            <% end if @contract.complete %>
+            <% unless @contract.complete %>
+              <%= link_to edit_contract_path(@contract), class: "btn btn-primary btn-md", target: :_blank do %>
+                <i class="fa fa-edit"></i>Edit
+              <% end %>
+
+              <%= link_to complete_contract_path(@contract), class: "btn btn-success btn-md", data: {confirm: "Once contract completed, cann't be edit. Are you sure?"} do %>
+                <i class="fa fa-check-square-o"></i>Mark as Complete
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="show-contract">
+          <div class="" style="padding: .5in;" id="show-contract-body">
+            <!-- <p class="contract-title" style="font-size: 24px;font-weight: 600;color: #000;font-family: inherit;"><%#= @contract.title&.humanize %></p>
+            <p class="contract-sub-title" style="font-size: 18px;font-weight: 600;color: #000;font-family: inherit;padding-left: 15px;"><%#= @contract.sub_title&.humanize %></p> -->
+            <div class="contract-body" style="">
+              <%= @contract.body&.html_safe %>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#show-contract-body .parent-break').find("p").remove()
+    $('#show-contract-body .parent-break').find("div").remove()
+    $('.remove_icon').hide()
+  })
+</script>

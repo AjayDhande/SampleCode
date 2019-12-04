@@ -1,0 +1,47 @@
+<div id="comment-<%= comment.id %>" class="comment container">
+  <div class="row comment-display">
+    <div class="col-sm-1 attachment-user-image">
+      <%= attachment_image_tag comment.user, :image, :fill, 40, 40, fallback: 'silhouette-small.png', alt: "" %>
+    </div>
+    <div class="col-sm-11">
+      <p>
+        <strong><%= link_to comment.user.nil? ? "Guest" : comment.user.name, '#' %></strong>
+        <small class="created-at-text"><em><%= timeago_tag comment.created_at %></em></small>
+      </p>
+      <p class="comment-body-text">
+        <%= comment.body %>
+      </p>
+      <%= content_tag(:a, class: 'add-comment-btn') do %>
+        <span class='fa fa-sm fa-reply'></span>
+        <small>Reply</small>
+      <% end %>
+      <%if comment.user == current_user && !current_user.nil? %>
+        <a href="javascript:void(0)" id="update-comment-btn<%= comment.id %>"><span class='fa fa-sm fa-reply'></span>Edit</a>
+      <%end%>
+    </div>
+  </div>
+
+  <div class="row comment_left_padding">
+    <%= simple_form_for [@project, @comment], html: { class: 'hide' } do |f| %>
+      <%= f.input :body, as: :text, :input_html => { 'rows' => 1 }, label: false, placeholder: 'Write a reply...', class: 'form-control' %>
+      <%= f.hidden_field :commentable_id, value: comment.id %>
+      <%= f.hidden_field :commentable_type, value: 'Comment' %>
+      <%= f.submit 'Post Reply',  class: 'btn btn-primary', id: "btn_post_reply" %>
+    <% end %>
+  </div>
+
+  <div id="edit-comment-display<%= comment.id %>">
+    <div class="row comment_left_padding">
+      <%= simple_form_for [@project, comment], method: :put, html: { class: 'hide' } do |f| %>
+        <%= f.input :body, as: :text, :input_html => { 'rows' => 1}, label: false, placeholder: 'Write a reply...', class: 'form-control' %>
+        <%= f.hidden_field :commentable_id, value: comment.id %>
+        <%= f.hidden_field :project_id, value: @project.id %>
+        <%= f.submit 'Update', disabled: current_user.nil?, class: 'btn btn-primary', id: "btn_post_update#{comment.id}" %>
+      <%end%>
+    </div>    
+  </div>  
+
+  <div class="row">
+    <%= render comment.comments %>
+  </div>
+</div>

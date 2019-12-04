@@ -1,0 +1,53 @@
+<input type='hidden' id='current_page_change' /> 
+<input type='hidden' id='current_page' />  
+<input type='hidden' id='show_per_page' />
+<%= form_for @contract, html: {class: "form-horizontal new-contract #{params[:action]}"} do |f| %>
+  <%= hidden_field_tag :r, nil, value: '' %>
+  <%= hidden_field_tag :status, nil, value: '' %>
+  <%= f.hidden_field :name %>
+  <%= f.hidden_field :title %>
+  <%= f.hidden_field :sub_title %>
+  <%= f.hidden_field :body %>
+
+  <!--<div class="note-editable dd" size="A4" style="width: 21cm;min-height:1040px;font-family: sans-serif;padding: 30mm 45mm 30mm 45mm;" id='nestable1'>-->
+  <div class="note-editable dd" size="A4" style="width: 210mm;min-height:297mm;font-family: sans-serif;padding: 30mm 45mm 30mm 45mm;" id='nestable1'>    
+    <% if params[:action] == 'new' %>
+      <p id='form_contract_title' data-placeholder='Title' style='font-size: 24px;height:24px;margin: 10px 0px 10px 0;'>
+        <span data-placeholder='Title' style='font-size: 24px;height:24px;margin: 10px 0px 10px 0;'><%= params[:title] %></span>
+        <input type="text" placeholder="Title" name="" style="display: none;">
+      </p>
+      <p id='form_contract_sub_title' data-placeholder='Sub Title' style='font-size: 16px;margin: 10px 0px 10px 0px;height:16px;'>
+        <span data-placeholder='Sub Title'  style='font-size: 16px;margin: 10px 0px 10px 15px;height:16px;'><%= params[:sub_title] %></span>
+        <input type="text" placeholder="Sub Title" name="" style="display: none;">
+      </p>
+      <ol class='dd-list drag-drop-data super_parent' style="min-height: 100px;padding-left: 0;font-family: sans-serif !important;" data-section=2>
+        <div class="dd-empty"></div>
+        <li style='list-style: none; display: list-item;' class='dd-item last-child'></li></ol>
+    <% else %>
+      <%= @contract.body&.html_safe %>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="col-sm-12">
+  <br/>
+  <%= button_tag 'Save & Continue', class: "btn btn-success btn-contract-save", data: {status: :continue} %>
+  <%= button_tag 'Save & Exit', class: "btn btn-primary btn-contract-save", data: {status: :exit} %>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    $('body').addClass('mini-navbar');
+
+    $('#nestable1').nestable({
+        // group: 1
+    });
+    cPagination();
+
+    if($('form').hasClass('clone')){
+      $('span.handle-remove').remove();
+    }
+
+  });
+</script>
+
