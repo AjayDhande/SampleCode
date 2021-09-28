@@ -1,0 +1,64 @@
+<table id="sortsearch" class="table table-bordered  table-condensed">
+  <tfoot>
+    <tr>
+      <% @attribute_names.each do |attrib| %>
+        <th><%= attrib %></th>
+      <% end %>  
+    </tr>
+  </tfoot>
+  <thead>
+    <tr>
+      <% @attribute_names.each do |attrib| %>
+        <th><%= attrib %></th>
+      <% end %>  
+        <th class="hiden"></th>
+        <th class="hiden"></th>
+        <th class="hiden"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @collection.each do |collect| %>
+      <tr>
+        <% @not_special.each do |attrib| %>
+          <% if attrib == "role" %>
+            <td><%= collect.send(attrib).name %></td>
+          <% elsif attrib == "users"  || attrib == "plant_codes" %> 
+            <td><%= collect.send(attrib).count %></td>
+          <% else %>  
+            <td><%= collect.send(attrib) %></td>
+          <% end %>
+        <% end %>
+        <% @special.each do |attrib| %>
+          <td>
+            <small class='label label-<%= "#{@opts[:status][collect[:status].to_sym]}" %>'><%= collect.send(attrib) %></small>
+          </td>
+        <% end if @special.present? %>
+        <td><%= link_to collect do %> <i class="fa fa-eye"></i>
+          <% end %></td>
+        <td><%= link_to eval("edit_#{@collection.to_s.underscore}_path(collect)") do %> <i class="fa fa-pencil"></i>
+          <% end %></td>
+        <td><%= link_to collect, method: :delete, data: { confirm: 'Está seguro de eliminar?' } do %><i class="fa fa-trash"></i>
+        <% end %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+  // Setup - add a text input to each footer cell
+  $(document).ready(function() {
+    $('#sortsearch tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" />' );
+    } );
+    // DataTable
+    var table = $('#sortsearch').DataTable();
+    // Apply the filter
+    $("#sortsearch tfoot input").on( 'keyup change', function () {
+        table
+            .column( $(this).parent().index()+':visible' )
+            .search( this.value )
+            .draw();
+    } ); 
+  } );
+</script>

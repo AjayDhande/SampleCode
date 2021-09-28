@@ -1,0 +1,33 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2><%= t('views.crops.index.title') %></h2>
+    <ol class="breadcrumb">
+      <li>
+        <%= link_to t('views.home.breadcrumb'), root_path %>
+      </li>
+      <li class="active">
+        <strong> <%= t('views.crops.index.title') %> </strong>
+      </li>
+    </ol>
+  </div>
+  <div class="col-lg-2">
+  </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h5> <%= t('views.crops.index.crop_list') %>  <small class="text-muted">| <%= @collection.count %> <%= t('views.crops.index.crops') %> </small></h5>
+      <div class="ibox-tools">
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up"></i>
+        </a>
+      </div>
+    </div>
+    <%= link_to new_crop_path, class: 'btn btn-primary' do %> <i class="fa fa-plus"></i> <%= t('views.crops.index.new_crop') %> <% end %>
+    <div class="ibox-content">
+        <% render_dynamic_index(@collection, %w( code crop_type short_name family plant_codes status), %w( code  crop_type short_name family plant_codes), ['status'], {status: { active: 'success', unactive: 'warning', no_status: 'default'}}) %>
+    </div>
+  </div>
+  <br>
+</div>
