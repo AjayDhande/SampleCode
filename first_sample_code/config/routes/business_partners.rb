@@ -1,1 +1,0 @@
-resources :business_partners
